@@ -72,12 +72,18 @@
         }
 
         .carousel-image {
-            max-width: 100%;
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: none;
-            /* Ocultar todas las imágenes inicialmente */
         }
+
+        .carousel-image.active {
+            display: block;
+        }
+
 
         .carousel-image.active {
             display: block;
