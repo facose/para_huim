@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Día del Padre!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            /* Un azul cielo claro */
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+            /* Un azul oscuro */
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #34495e;
+            /* Un gris azulado */
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        button {
+            background-color: #3498db;
+            /* Un azul brillante */
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+            /* Espacio para el botón de "Siguiente" */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+            /* Un azul un poco más oscuro al pasar el ratón */
+        }
+
+        .carousel-container {
+            position: relative;
+            /* Para posicionar los botones de navegación */
+            margin-top: 30px;
+            max-width: 100%;
+        }
+
+        .carousel-image {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+            /* Ocultar todas las imágenes inicialmente */
+        }
+
+        .carousel-image.active {
+            display: block;
+            /* Mostrar solo la imagen activa */
+        }
+
+        .carousel-button {
+            background-color: #5dade2;
+            /* Un azul más claro para los botones del carrusel */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px 0;
+            /* Margen superior y a los lados */
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-button:hover {
+            background-color: #3498db;
+        }
+
+        .navigation-buttons {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>¡Feliz Día del Padre!</h1>
+        <p>Pa, gracias por ser nuestro guía, nuestro apoyo y nuestro ejemplo. Tu amor y dedicación iluminan nuestros
+            días. ¡Te queremos mucho!</p>
+        <button onclick="iniciarSorpresa()">Ver una sorpresa de tus hijas</button>
+
+        <div id="carousel" class="carousel-container" style="display:none;">
+            <img id="fotoHija1" class="carousel-image active" src="" alt="Foto de tus hijas 1">
+            <img id="fotoHija2" class="carousel-image" src="" alt="Foto de tus hijas 2">
+            <img id="fotoHija3" class="carousel-image" src="" alt="Foto de tus hijas 3">
+            <img id="fotoHija4" class="carousel-image" src="" alt="Foto de tus hijas 4">
+            <img id="fotoHija5" class="carousel-image" src="" alt="Foto de tus hijas 5">
+            <img id="fotoHija6" class="carousel-image" src="" alt="Foto de tus hijas 6">
+            <img id="fotoHija7" class="carousel-image" src="" alt="Foto de tus hijas 7">
+            <div class="navigation-buttons">
+                <button class="carousel-button" onclick="cambiarFoto(-1)">Anterior</button>
+                <button class="carousel-button" onclick="cambiarFoto(1)">Siguiente</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const enlacesFotos = [
+            "/public/papi_1.jpg",
+            "/public/papi_2.jpg",
+            "/public/papi_3.jpg",
+            "/public/papi_4.jpg",
+            "/public/papi_5.jpg",
+            "/public/papi_6.jpg",
+            "/public/papi_7.jpg"
+        ];
+
+        let indiceFotoActual = 0;
+        let imagenesCarousel; // Se inicializará después de cargar el DOM
+
+        function iniciarSorpresa() {
+            const carouselDiv = document.getElementById('carousel');
+            imagenesCarousel = carouselDiv.getElementsByClassName('carousel-image');
+
+            // Asignar los src a las imágenes
+            for (let i = 0; i < enlacesFotos.length; i++) {
+                if (imagenesCarousel[i]) {
+                    imagenesCarousel[i].src = enlacesFotos[i];
+                }
+            }
+
+            if (imagenesCarousel.length > 0) {
+                mostrarFotoActual();
+                carouselDiv.style.display = 'block';
+                // Ocultar el botón inicial después de mostrar la primera foto
+                document.querySelector('button[onclick="iniciarSorpresa()"]').style.display = 'none';
+            } else {
+                alert("No hay fotos para mostrar. Asegúrate de agregar los enlaces a las imágenes.");
+            }
+        }
+
+        function mostrarFotoActual() {
+            for (let i = 0; i < imagenesCarousel.length; i++) {
+                imagenesCarousel[i].classList.remove('active');
+            }
+            if (imagenesCarousel[indiceFotoActual]) {
+                imagenesCarousel[indiceFotoActual].classList.add('active');
+            }
+        }
+
+        function cambiarFoto(direccion) {
+            if (!imagenesCarousel || imagenesCarousel.length === 0) return;
+
+            indiceFotoActual += direccion;
+
+            if (indiceFotoActual >= imagenesCarousel.length) {
+                indiceFotoActual = 0; // Vuelve a la primera foto
+            } else if (indiceFotoActual < 0) {
+                indiceFotoActual = imagenesCarousel.length - 1; // Va a la última foto
+            }
+            mostrarFotoActual();
+        }
+    </script>
+</body>
+
+</html>
